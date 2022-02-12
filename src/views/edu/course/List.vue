@@ -44,10 +44,10 @@
 
       <el-table-column label="操作" width="400" align="center">
         <template slot-scope="scope">
-          <router-link :to="'/teacher/edit/' + scope.row.id">
+          <router-link :to="'/course/info/' + scope.row.id">
             <el-button type="primary" size="mini" icon="el-icon-edit">编辑课程基本信息</el-button>
           </router-link>
-          <router-link :to="'/teacher/edit/' + scope.row.id">
+          <router-link :to="'/course/chapter/' + scope.row.id">
             <el-button type="primary" size="mini" icon="el-icon-edit">编辑课程大纲</el-button>
           </router-link>
           <el-button
@@ -84,7 +84,8 @@ export default {
       limit: 10, //每页显示记录数
       total: 0, //总记录数
       courseQuery: {}, //条件封装对象
-      list: null, //查询之后接口返回集合
+      list: null, //查询之后接口返回集合,
+
     };
   },
   methods: {

@@ -79,15 +79,16 @@
           />
         </el-form-item>
         <el-form-item label="是否免费">
-          <el-radio-group v-model="video.free">
-            <el-radio :label="true">免费</el-radio>
-            <el-radio :label="false">默认</el-radio>
+          <el-radio-group v-model="video.isFree">
+            <el-radio :label="0">免费</el-radio>
+            <el-radio :label="1">默认</el-radio>
           </el-radio-group>
         </el-form-item>
         
   <el-form-item label="上传视频">
           <el-upload
           :on-success="handleVodUploadSuccess"
+          :on-progress="handleOnProgress"
           :on-remove="handleVodRemove"
           :before-remove="beforeVodRemove"
           :on-exceed="handleUploadExceed"
@@ -160,6 +161,12 @@ export default {
     };
   },
   methods: {
+    //文件上传时的钩子
+    //没上传成功前不允许点击确定
+    handleOnProgress(){
+      this.saveVideoBtnDisabled=true
+    },
+
     //点击确定删除调用的方法
     handleVodRemove(){
       //调用接口里面的删除视频的方法
@@ -184,6 +191,7 @@ export default {
     },
     //上传视频成功调用的方法
     handleVodUploadSuccess(response,file,fileList){
+      this.saveVideoBtnDisabled=false
       //上传视频id赋值
       this.video.videoSourceId=response.data.videoId
       //上传视频名称赋值
@@ -207,6 +215,7 @@ export default {
           this.video.title=''
           this.video.sort=0
           this.video.isFree=0
+          this.fileList=[]
     },
 
     //添加小节
@@ -234,6 +243,7 @@ export default {
         video.getVideoById(videoId).then(
             response=>{
                 this.video=response.data.eduVideo
+                this.fileList=[{name:this.video.videoOriginalName}]
             }     
         )
     },
@@ -252,6 +262,7 @@ export default {
                   //刷新页面
                   this.getChapterVideo()
                   this.video={} //切记加上，否则更新完了之后添加还是会调用更新方法
+                  this.fileList=[]
             }
         )
     },
@@ -415,10 +426,11 @@ export default {
     //获取到路由中的id值
     if (this.$route.params && this.$route.params.id) {
       this.courseId = this.$route.params.id;
-      this.getChapterVideo();
+      // this.getChapterVideo();
       // console.log(chapterVideoList)
     }
     // console.log(this.$route.params.id);
+    this.getChapterVideo()
   },
 };
 </script>
