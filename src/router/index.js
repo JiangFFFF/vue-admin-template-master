@@ -133,6 +133,36 @@ export const constantRouterMap = [
   },
 
   {
+    path: '/banner',
+    component: Layout,
+    //redirect：重定向地址
+    redirect: '/banner/table',
+    name: '幻灯片管理',
+    meta: { title: '幻灯片管理', icon: 'example' },
+    children: [
+      {
+        path: 'table',
+        name: '幻灯片列表',
+        component: () => import('@/views/edu/banner/List'),
+        meta: { title: '幻灯片列表', icon: 'table' }
+      },
+      {
+        path: 'save',
+        name: '添加幻灯片',
+        component: () => import('@/views/edu/banner/Save'),
+        meta: { title: '添加幻灯片', icon: 'tree' }
+      },
+      {
+        path: 'edit/:id',
+        name: 'EduBannerEdit',
+        component: () => import('@/views/edu/banner/Save'),
+        meta: { title: '编辑幻灯片', noCache:true },
+        hidden:true
+      }
+    ]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
