@@ -163,6 +163,36 @@ export const constantRouterMap = [
   },
 
   {
+    path: '/sta',
+    component: Layout,
+    //redirect：重定向地址
+    redirect: '/sta/table',
+    name: '统计分析',
+    meta: { title: '统计分析', icon: 'example' },
+    children: [
+      {
+        path: 'create',
+        name: '生成数据',
+        component: () => import('@/views/sta/Create'),
+        meta: { title: '生成数据', icon: 'table' }
+      },
+      {
+        path: 'show',
+        name: '图表显示',
+        component: () => import('@/views/sta/Show'),
+        meta: { title: '图表显示', icon: 'tree' }
+      },
+      // {
+      //   path: 'edit/:id',
+      //   name: 'EduBannerEdit',
+      //   component: () => import('@/views/edu/banner/Save'),
+      //   meta: { title: '编辑幻灯片', noCache:true },
+      //   hidden:true
+      // }
+    ]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
